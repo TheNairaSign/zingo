@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zingo/constants/images.dart';
 import 'package:zingo/pages/login_page.dart';
+import 'package:zingo/pages/sign_up_page.dart';
 import 'package:zingo/widgets/black_button.dart';
 
 class StartPage extends StatelessWidget {
@@ -28,7 +29,7 @@ class StartPage extends StatelessWidget {
                   width: 300,
                   child: BlackButton(
                     text: "Sign Up",
-                    onPressed: () {},
+                    onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SignUpPage())),
                   ),
                 ),
                 const SizedBox(

@@ -1,8 +1,11 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:zingo/animations/login_animations.dart';
+import 'package:zingo/pages/sign_up_page.dart';
+import 'package:zingo/providers/login_provider.dart';
+import 'package:zingo/widgets/custom_textField.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
@@ -11,70 +14,136 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Duration duration = const Duration(seconds: 2);
     final size = MediaQuery.of(context).size.width;
     return Scaffold(
       body: SingleChildScrollView(
-        child: Stack(
+        child: _bodyStack(size, duration, context),
+      ),
+    );
+  }
+
+  Stack _bodyStack(double size, Duration duration, BuildContext context) {
+    return Stack(
+      children: [
+        const Positioned(
+          top: 30,
+          left: 20,
+          height: 30,
+          child: CloseButton(),
+        ),
+        Positioned(
+          right: 10,
+          child: loginAnimate.light1,
+        ),
+        Positioned(
+          left: size / 2,
+          child: loginAnimate.light2,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 30, right: 30, top: 70),
+          child: _columnInStack(duration, context),
+        ),
+      ],
+    );
+  }
+
+  Column _columnInStack(Duration duration, BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Positioned(
-              top: 30,
-              left: 20,
-              child: GestureDetector(
-                onTap: () => Navigator.of(context).pop(),
-                child: SvgPicture.asset(
-                  "assets/svg/close.svg",
-                  height: 30,
-                ),
-              ),
-            ),
-            Positioned(
-              right: 10,
-              child: loginAnimate.light1,
-            ),
-            Positioned(
-              left: size / 2,
-              child: loginAnimate.light2,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 30, right: 30, top: 70),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      loginAnimate.loiginText,
-                    ],
-                  ),
-                  const SizedBox(height: 180),
-                  loginAnimate.tf1,
-                  const SizedBox(height: 20),
-                  loginAnimate.tf2,
-                  const SizedBox(
-                    height: 150,
-                  ),
-                  loginAnimate.loginButton,
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  TextButton(
-                    style: ButtonStyle(
-                      overlayColor: MaterialStateProperty.all(Colors.grey),
-                    ),
-                    onPressed: () {},
-                    child: Text(
-                      "Forgot your password?",
-                      style: GoogleFonts.jost(
-                        color: Colors.black,
-                        fontSize: 18,
-                      ),
-                    ),
-                  ),
-                  loginAnimate.facebookButton,
-                ],
-              ),
-            ),
+            loginAnimate.loiginText,
           ],
+        ),
+        const SizedBox(height: 180),
+        _emailTextField(duration, context),
+        const SizedBox(height: 20),
+        _passwordTextField(duration, context),
+        const SizedBox(
+          height: 150,
+        ),
+        loginAnimate.loginButton,
+        const SizedBox(
+          height: 50,
+        ),
+        _forgotPassword(context),
+        loginAnimate.facebookButton,
+        const SizedBox(height: 20),
+        FadeInUp(
+          duration: duration,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Don't have an account?",
+                style: GoogleFonts.jost(fontSize: 18),
+              ),
+              _signUpButton(context),
+            ],
+          ),
+        )
+      ],
+    );
+  }
+
+  TextButton _forgotPassword(BuildContext context) {
+    return TextButton(
+        style: ButtonStyle(
+          overlayColor: MaterialStateProperty.all(Colors.grey),
+        ),
+        onPressed: () {},
+        child: Text(
+          "Forgot your password?",
+          style: GoogleFonts.jost(
+            color: Colors.black,
+            fontSize: 18,
+          ),
+        ),
+      );
+  }
+
+  FadeInDown _passwordTextField(Duration duration, BuildContext context) {
+    final _ = context.read<LoginProvider>();
+    return FadeInDown(
+      duration: duration,
+      child: CustomTextField(
+        controller: _.password,
+        hintText: "Password",
+        obScureText: true,
+      ),
+    );
+  }
+
+  FadeInDown _emailTextField(Duration duration, BuildContext context) {
+    final _ = context.read<LoginProvider>();
+    return FadeInDown(
+      duration: duration,
+      child: CustomTextField(
+        hintText: "Email",
+        controller: _.email,
+      ),
+    );
+  }
+
+  TextButton _signUpButton(BuildContext context) {
+    return TextButton(
+      style: const ButtonStyle(
+        overlayColor: MaterialStatePropertyAll(Colors.grey),
+      ),
+      onPressed: () => Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const SignUpPage(),
+        ),
+      ),
+      child: Text(
+        "Sign up",
+        style: GoogleFonts.jost(
+          fontSize: 18,
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
         ),
       ),
     );

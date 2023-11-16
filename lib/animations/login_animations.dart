@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:zingo/widgets/black_button.dart';
 
-class LoginPageAnimations {
-  static Duration duration = const Duration(seconds: 1);
+class LoginPageAnimations { 
+
+  static Duration duration = const Duration(seconds: 2);
 
   final loiginText = FadeInLeft(
     duration: duration,
@@ -36,40 +37,7 @@ class LoginPageAnimations {
     ),
   );
 
-  final tf1 = FadeInDown(
-    duration: duration,
-    child: TextField(
-      cursorColor: Colors.black,
-      enabled: true,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.black),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        fillColor: Colors.white,
-        filled: true,
-        hintText: "Email",
-        contentPadding: const EdgeInsets.all(8),
-      ),
-    ),
-  );
-
-  final tf2 = FadeInDown(
-    duration: duration,
-    child: TextField(
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.black),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        fillColor: Colors.white,
-        filled: true,
-        enabled: true,
-        hintText: "Password",
-        contentPadding: const EdgeInsets.all(8),
-      ),
-    ),
-  );
+  
 
   final loginButton = FadeInDown(
     duration: duration,
@@ -88,6 +56,8 @@ class LoginPageAnimations {
       child: ElevatedButton(
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(Colors.white),
+          overlayColor:
+              MaterialStateProperty.all(Colors.blue.withOpacity(0.50)),
           side: MaterialStateProperty.all<BorderSide>(
             const BorderSide(
               color: Colors.blue,
