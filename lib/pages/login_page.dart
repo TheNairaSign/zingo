@@ -1,10 +1,12 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
+import 'package:provider/provider.dart'; 
 import 'package:zingo/animations/login_animations.dart';
+import 'package:zingo/pages/home_page.dart';
 import 'package:zingo/pages/sign_up_page.dart';
 import 'package:zingo/providers/login_provider.dart';
+import 'package:zingo/widgets/black_button.dart';
 import 'package:zingo/widgets/custom_textField.dart';
 
 class LoginPage extends StatelessWidget {
@@ -65,7 +67,7 @@ class LoginPage extends StatelessWidget {
         const SizedBox(
           height: 150,
         ),
-        loginAnimate.loginButton,
+        _loginButton(duration, context),
         const SizedBox(
           height: 50,
         ),
@@ -89,20 +91,34 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  TextButton _forgotPassword(BuildContext context) {
-    return TextButton(
-        style: ButtonStyle(
-          overlayColor: MaterialStateProperty.all(Colors.grey),
-        ),
-        onPressed: () {},
-        child: Text(
-          "Forgot your password?",
-          style: GoogleFonts.jost(
-            color: Colors.black,
-            fontSize: 18,
+  FadeInDown _loginButton(Duration duration, BuildContext context) {
+    return FadeInDown(
+      duration: duration,
+      child: BlackButton(
+        text: "LOGIN",
+        onPressed: () => Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const HomePage(),
           ),
         ),
-      );
+      ),
+    );
+  }
+
+  TextButton _forgotPassword(BuildContext context) {
+    return TextButton(
+      style: ButtonStyle(
+        overlayColor: MaterialStateProperty.all(Colors.grey),
+      ),
+      onPressed: () {},
+      child: Text(
+        "Forgot your password?",
+        style: GoogleFonts.jost(
+          color: Colors.black,
+          fontSize: 18,
+        ),
+      ),
+    );
   }
 
   FadeInDown _passwordTextField(Duration duration, BuildContext context) {

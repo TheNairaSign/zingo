@@ -1,7 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:zingo/widgets/black_button.dart';
 
 class LoginPageAnimations { 
 
@@ -34,16 +33,6 @@ class LoginPageAnimations {
     child: Image.asset(
       "assets/light-2.png",
       color: Colors.black,
-    ),
-  );
-
-  
-
-  final loginButton = FadeInDown(
-    duration: duration,
-    child: BlackButton(
-      text: "LOGIN",
-      onPressed: () {},
     ),
   );
 
