@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class LoginPageAnimations { 
 
-  static Duration duration = const Duration(seconds: 2);
+  static Duration duration = const Duration(milliseconds: 1500);
 
   final loiginText = FadeInLeft(
     duration: duration,

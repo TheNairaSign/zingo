@@ -16,7 +16,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Duration duration = const Duration(seconds: 2);
+    Duration duration = const Duration(milliseconds: 1500);
     final size = MediaQuery.of(context).size.width;
     return Scaffold(
       body: SingleChildScrollView(
