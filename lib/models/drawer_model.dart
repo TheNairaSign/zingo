@@ -27,6 +27,7 @@ class MenuItemModel {
         title: "Home",
         onPressed: (context) {
           debugPrint("Home");
+          Navigator.of(context).pop();
           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => StartPage()));
         },
         delay: 500,
@@ -37,6 +38,7 @@ class MenuItemModel {
         title: "Shop",
         onPressed: (context) {
           debugPrint("Shop");
+          Navigator.of(context).pop();
           Navigator.of(context).push(MaterialPageRoute(builder: ((context) => const HomePage())));
         },
         delay: 1000

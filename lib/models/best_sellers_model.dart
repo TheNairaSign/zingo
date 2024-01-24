@@ -11,16 +11,17 @@ class BestSellersModel {
 
   static List<BestSellersModel> get content {
     List<BestSellersModel> contentItem = [];
+    String img = "assets/png";
 
     contentItem.add(BestSellersModel(
       desc: "Georg Jensen Minimal Clock",
       price: 34.10,
-      imageUrl: "https://i0.wp.com/sklimited.com/wp-content/uploads/2020/01/pack___3587585-1200-0.png?fit=800%2C800&ssl=1",
+      imageUrl: "$img/blue-sofa.png",
     ));
     contentItem.add(BestSellersModel(
       desc: "Teapot with black tea",
       price: 29.54,
-      imageUrl: "https://dhb3yazwboecu.cloudfront.net/1007//52152_TeteraArareNegra1500ml_1000X1000_l-.jpg",
+      imageUrl: "https://pikbest.com/png-images/luxury-furniture-velvet-cover-high-quality-section-sofa_9100595.html",
     ));
     contentItem.add(BestSellersModel(
       desc: "Office chair",

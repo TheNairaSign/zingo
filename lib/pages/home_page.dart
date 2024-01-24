@@ -1,9 +1,13 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:zingo/components/appbar.dart';
 import 'package:zingo/components/drawer.dart';
 import 'package:zingo/models/best_sellers_model.dart';
 import 'package:zingo/models/explore_model.dart';
 import 'package:zingo/pages/show_all_page.dart';
+import 'package:zingo/providers/appbar_key_provider.dart';
 import 'package:zingo/widgets/show_all.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,7 +20,10 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<ExploreModel> items = [];
   List<BestSellersModel> bestSell = [];
+  var tapped = false;
 
+  
+  final trans = const Color.fromARGB(72, 255, 255, 255);
   void _exploreModel() {
     items = ExploreModel.exploreItems;
   }
@@ -35,36 +42,17 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final _ = context.read<KeyProvider>();
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 70,
-        foregroundColor: Colors.black,
-        backgroundColor: Colors.white,
-        elevation: 0,
-        actionsIconTheme: const IconThemeData(
-          color: Colors.black,
-          size: 30,
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 20),
-            child: Row(
-              children: [
-                GestureDetector(
-                  child: const Icon(
-                    Icons.search,
-                  ),
-                ),
-                const SizedBox(width: 20),
-                GestureDetector(
-                  child: const Icon(
-                    Icons.shopping_bag_outlined,
-                  ),
-                )
-              ],
-            ),
-          ),
-        ],
+      key: _.scaffoldKey,
+      // backgroundColor: trans,
+      appBar: MyAppBar(
+        onTap: () {
+          setState(() {
+            debugPrint("Home Page Drawer");
+            _.openDrawer();
+          });
+        },
       ),
       drawer: const MenuDrawer(),
       body: SingleChildScrollView(
@@ -79,20 +67,20 @@ class _HomePageState extends State<HomePage> {
                   color: Colors.black,
                   fontWeight: FontWeight.w500,
                 ),
-                textScaleFactor: 4,
+                textScaleFactor: 3.5,
               ),
               const SizedBox(height: 20),
               _exploreHorizontalScroll(),
               const SizedBox(
-                height: 30,
+                height: 20,
               ),
               Row(
                 children: [
                   Text(
                     "Best Sellers",
+                    textScaleFactor: 2.5,
                     style: GoogleFonts.jost(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                   const Spacer(),
@@ -107,7 +95,7 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
+  
   GridView bestSellersGrid() {
     return GridView.builder(
         shrinkWrap: true,
@@ -116,7 +104,7 @@ class _HomePageState extends State<HomePage> {
           crossAxisCount: 2,
           crossAxisSpacing: 15,
           mainAxisSpacing: 15,
-          mainAxisExtent: 300
+          mainAxisExtent: 350,
         ),
         itemCount: bestSell.length,
         itemBuilder: (context, index) {
@@ -127,15 +115,15 @@ class _HomePageState extends State<HomePage> {
                 child: Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration( 
+                  decoration: const BoxDecoration( 
                     image: DecorationImage(
-                      image: NetworkImage(bestSell[index].imageUrl),
-                      alignment: Alignment.center,
-                      fit: BoxFit.fill,
+                      image: AssetImage(
+                        "assets/blue-sofa.png",
                       ),
-                    color: const Color(0xfff5f5f5),
-                    // color: Colors.green,
-                    borderRadius: const BorderRadius.all(
+                      fit: BoxFit.fill,
+                    ),
+                    color: Color.fromARGB(255, 207, 207, 207),
+                    borderRadius: BorderRadius.all(
                       Radius.circular(5),
                     ),
                   ),
@@ -162,10 +150,11 @@ class _HomePageState extends State<HomePage> {
                     Expanded(
                       child: Text(
                         bestSell[index].desc,
+                        textScaleFactor: 1,
                         maxLines: 2,
                         overflow: TextOverflow.visible,
                         style: GoogleFonts.jost(
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w600,
                           fontSize: 20
                         ),
                       ),
@@ -173,7 +162,7 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
-              const SizedBox(height: 10,),
+              const SizedBox(height: 7,),
               Text("\$${bestSell[index].price}", style: GoogleFonts.jost(
                 fontSize: 20,
                 color: Colors.grey
@@ -198,37 +187,43 @@ class _HomePageState extends State<HomePage> {
                 width: 210,
                 child: GestureDetector(
                   onTap: () {
-                    print(items[index].category.name);
+                    debugPrint(items[index].category.name);
                     setState(() {
                       tappedIndex = index;
+                      tapped = true;
                     });
                   },
                   child: Card(
-                    color: tappedIndex == index
-                        ? const Color(0xfff4c670)
-                        : Colors.white,
+                    color: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
+                      side: tappedIndex == index ? const BorderSide(color:  Colors.blue) : BorderSide.none,
                     ),
                     shadowColor: Colors.black,
                     surfaceTintColor: Colors.black,
                     elevation: 1,
                     child: Padding(
                       padding: const EdgeInsets.all(40.0),
-                      child: Image.asset(
-                        items[index].categoryImage,
-                        height: 20,
-                      ),
+                      child: tappedIndex == index ? ZoomIn(
+                        duration: const Duration(milliseconds: 500),
+                        child: Image.asset(
+                          items[index].categoryImage,
+                          height: 20,
+                        ),
+                      ) : Image.asset(
+                          items[index].categoryImage,
+                          height: 20,
+                        ),
                     ),
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 15),
               Text(
                 items[index].category.name[0].toUpperCase() +
                     items[index].category.name.substring(1),
                 style:
-                    GoogleFonts.jost(fontSize: 25, fontWeight: FontWeight.w600),
+                    GoogleFonts.jost(fontSize: 25, fontWeight: FontWeight.w600,),
               ),
               Text(
                 "${items[index].numberOfItems} items",
