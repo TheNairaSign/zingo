@@ -21,11 +21,9 @@ void main(List<String> args) {
     ),
   );
 }
-// const trans =Color.fromARGB(72, 255, 255, 255);
-// final theme = ThemeData(
-//   scaffoldBackgroundColor: trans,
-//   appBarTheme: const AppBarTheme(color: trans )
-// );
+const plusShadowColor = Colors.grey;
+const minusShadowColor = Color.fromARGB(70, 247, 246, 246);
+
 class Zingo extends StatelessWidget {
   const Zingo({super.key});
 

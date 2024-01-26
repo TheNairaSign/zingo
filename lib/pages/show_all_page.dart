@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:zingo/components/drawer.dart';
-import 'package:zingo/models/show_all/cyber_monday.dart';
-import 'package:zingo/models/show_all/new_arrivals.dart';
+import 'package:zingo/pages/new_arrivals.dart';
 import 'package:zingo/providers/appbar_key_provider.dart';
-import 'package:zingo/widgets/show_all.dart';
 
 class ShowAllPage extends StatefulWidget {
   const ShowAllPage({super.key});
@@ -15,17 +13,7 @@ class ShowAllPage extends StatefulWidget {
 }
 
 class _ShowAllPageState extends State<ShowAllPage> {
-  List<CyberMonday> cmItems = [];
-
-  void cmDeals() {
-    cmItems = CyberMonday.cmItems;
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    cmDeals();
-  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -33,10 +21,6 @@ class _ShowAllPageState extends State<ShowAllPage> {
     return Consumer<KeyProvider>(
       builder: (context, key, child) => SafeArea(
         child: Scaffold(
-          // appBar: MyAppBar(
-          //   onTap: () {
-          //   _.openDrawer2();
-          // }),
           drawer: const MenuDrawer(),
           key: _.scaffoldKey2,
           body: SingleChildScrollView(
@@ -47,67 +31,11 @@ class _ShowAllPageState extends State<ShowAllPage> {
                 const SizedBox(
                   height: 20,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15),
-                  child: Row(
-                    children: [
-                      Text(
-                        "New Arrivals",
-                        style: GoogleFonts.jost(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const Spacer(),
-                      const ShowAll(page: NewArrivals()),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15, right: 15),
-                  child: SizedBox(
-                    height: 200,
-                    child: ListView.separated(
-                        shrinkWrap: true,
-                        separatorBuilder: (context, index) => const SizedBox(width: 15),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: cmItems.length,
-                        itemBuilder: (context, index) {
-                          return Column(
-                            children: [
-                              Container(
-                                height: 130,
-                                width: 130,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image:NetworkImage(cmItems[index].productImage),
-                                    fit: BoxFit.cover,
-                                  ),
-                                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                                ),
-                                // child: FadeInImage(
-                                //   placeholder: MemoryImage(kTransparentImage),
-                                //   image: NetworkImage(cmItems[index].productImage),
-                                //   fit: BoxFit.cover,
-                                // ),
-                              ),
-                              Text(
-                                cmItems[index].productName,
-                                maxLines: 2,
-                                style: GoogleFonts.jost(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text(
-                                "\$${cmItems[index].productPrice}",
-                                style: GoogleFonts.jost(color: Colors.grey),
-                              ),
-                            ],
-                          );
-                        }),
-                  ),
-                ),
+                
+              const Padding(
+                 padding: EdgeInsets.only(left: 15, right: 15),
+                 child: NewArrivals(expanded: false,),
+               )
               ],
             ),
           ),

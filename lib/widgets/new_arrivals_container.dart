@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:zingo/main.dart';
+import 'package:zingo/widgets/shop_now_item.dart';
 
 class NAContainer extends StatelessWidget {
   const NAContainer({super.key});
@@ -17,13 +19,13 @@ class NAContainer extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         boxShadow: const [
           BoxShadow(
-            color: Colors.grey,
+            color: plusShadowColor,
             blurRadius: 5,
             offset: Offset(2, 2),
             spreadRadius: 1,
           ),
           BoxShadow(
-            color: Color.fromARGB(70, 247, 246, 246),
+            color: minusShadowColor,
             blurRadius: 5,
             offset: Offset(-2, -2),
             spreadRadius: 7,
@@ -65,29 +67,9 @@ class NAContainer extends StatelessWidget {
               const SizedBox(
                 height: 30,
               ),
-              InkWell(
-                overlayColor: MaterialStateProperty.all(Colors.black),
-                splashColor: Colors.grey,
-                splashFactory: InkSparkle.constantTurbulenceSeedSplashFactory,
-                onTap: () {
-                  debugPrint("Shop Now");
-                },
-                child: Row(
-                  children: [
-                    Text(
-                      "SHOP NOW",
-                      style: GoogleFonts.jost(
-                        decoration: TextDecoration.underline,
-                        color: Colors.black,
-                      ),
-                    ),
-                    const Icon(
-                      Icons.arrow_right,
-                      color: Colors.black,
-                    ),
-                  ],
-                ),
-              ),
+              const ShopNowItem(
+                axisAlignment: MainAxisAlignment.start,
+              )
             ],
           ),
         ],
