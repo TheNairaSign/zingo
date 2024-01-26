@@ -102,7 +102,7 @@ class _ShowAllPageState extends State<ShowAllPage> {
                               Text(
                                 "\$${cmItems[index].productPrice}",
                                 style: GoogleFonts.jost(color: Colors.grey),
-                              )
+                              ),
                             ],
                           );
                         }),
